@@ -1,6 +1,8 @@
 import Blob "mo:base/Blob";
 import Cycles "mo:base/ExperimentalCycles";
 import Text "mo:base/Text";
+import Time "mo:base/Time";
+import Int "mo:base/Int";
 
 //import the custom types you have in Types.mo
 import Types "Types";
@@ -34,7 +36,12 @@ actor {
 
     // 2.1 Setup the URL and its query parameters
     let host : Text = "api.exchange.coinbase.com";
-    let url = "https://" # host # "/products/BTC-USD/candles?granularity=3600&start=2022-01-01T00:00:00Z&end=2022-01-02T00:00:00Z";
+    
+    // Get current time and 24h ago for latest data
+    let now = Int.abs(Time.now()) / 1_000_000_000; // Convert nanoseconds to seconds
+    let oneDayAgo = now - (24 * 60 * 60); // 24 hours ago in seconds
+    
+    let url = "https://" # host # "/products/BTC-USD/candles?granularity=3600&start=" # Int.toText(oneDayAgo) # "&end=" # Int.toText(now);
 
     // 2.2 prepare headers for the system http_request call
     let request_headers = [
