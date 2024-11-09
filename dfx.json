@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "onchain-oracle-backend": {
+      "main": "src/onchain-oracle-backend/main.mo",
+      "type": "motoko"
+    },
+    "onchain-oracle-frontend": {
+      "dependencies": [
+        "onchain-oracle-backend"
+      ],
+      "source": [
+        "src/onchain-oracle-frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "onchain-oracle-frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
